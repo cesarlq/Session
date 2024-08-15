@@ -1,0 +1,18 @@
+.containerForm{
+    background-color: white;
+    padding: 2rem;
+    .divForms{
+        padding-bottom: 1rem;
+    }
+.mr-1{
+  margin-right: 1rem;
+}
+.mb-1{
+  margin-bottom: 1rem;
+}
+@for $i from 1 through 100 {
+  .width-#{$i} {
+    width: calc((1% * $i) - 1rem ) ;
+  }
+}
+}

@@ -1,0 +1,21 @@
+.containerAccount{
+    background-color: white;
+    padding: 2rem;
+    .divFormAccount{
+        padding-bottom: 1rem;
+    }
+}
+@for $i from 1 through 100 {
+    .mb-#{$i} {
+        margin-bottom: calc((1rem * $i));
+    }
+    .mt-#{$i}{
+        margin-top: calc((1rem * $i));
+    }
+    .ml-#{$i}{
+        margin-left: calc((1rem * $i));
+    }
+    .width-#{$i}{
+        width: calc((1% * $i) - 1rem);
+    }
+}

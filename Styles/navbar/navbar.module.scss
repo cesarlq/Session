@@ -1,0 +1,33 @@
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    background-color: #f5f5f5;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+    box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.5);
+    ul {
+        display: flex;
+        list-style: none;
+        gap: 1rem;
+        margin: 0;
+        padding: 0;
+        li {
+            a {
+                text-decoration: none;
+                color: black;
+                font-size: 1rem;
+                cursor: pointer;
+            }
+            .collapse{
+                position: absolute;
+                right: 0;
+                background-color: #f5f5f5;
+                box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+                        .itemIcon{
+                            justify-content: right;
+                        }
+            }
+        }
+    }
+}
