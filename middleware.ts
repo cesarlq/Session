@@ -3,7 +3,7 @@ import type { NextRequest } from 'next/server';
 import { jwtVerify } from 'jose';
 
 export async function middleware(req: NextRequest) {
-    const token = req.cookies.get('jwt');
+    const token = req.cookies.get('User');
     const url = req.nextUrl.clone();
     console.log('En producción:', {
       cookies: req.cookies,
