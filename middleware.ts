@@ -7,6 +7,7 @@ export async function middleware(req: NextRequest) {
     const url = req.nextUrl.clone();
     
   if (token) {
+    console.log('Si tiene Token')
     try {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
       const { payload } = await jwtVerify(token.value, secret);
@@ -15,7 +16,8 @@ export async function middleware(req: NextRequest) {
       console.error('Invalid JWT:', error);
     }
   }else{
-    const isPageRequest = !url.pathname.includes('.') && url.pathname !== '/' && url.pathname !== '/Register' ;
+    console.log('No Encontro Token.')
+    const isPageRequest = !url.pathname.includes('.') && url.pathname !== '/' && url.pathname !== '/Register';
     if (isPageRequest ) {
       url.pathname = '/';
       return NextResponse.redirect(url);
