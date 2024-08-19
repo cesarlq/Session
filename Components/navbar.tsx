@@ -8,6 +8,7 @@ import {REGISTER_PATH, INDEX_PATH, ACCOUNT_PATH } from '@utils/paths'
 import Router from 'next/router';
 
 function Navbar(props: any) {
+    console.log(props);
     const dispatch = useAppDispatch();
     const [open, setOpen] = useState(false);
     const handleClick = () => setOpen(!open);
