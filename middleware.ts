@@ -5,7 +5,10 @@ import { jwtVerify } from 'jose';
 export async function middleware(req: NextRequest) {
     const token = req.cookies.get('jwt');
     const url = req.nextUrl.clone();
-    console.log('token', token)
+    console.log('En producción:', {
+      cookies: req.cookies,
+      token: token ? token.value : 'No Token Found',
+    });
   if (token) {
     console.log('Si tiene Token')
     try {
