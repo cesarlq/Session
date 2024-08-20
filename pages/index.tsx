@@ -6,7 +6,6 @@ import {CookieLogginUser} from '@redux/thunks/user.thunk'
 import Index from '@pages/dashboard/page'
 import {resetLogIn, reseCookieLogginUser,resetLogOut} from '@redux/reducers/user.reducer'
 import { GlobalContext } from '../pages/_app';
-import { jwtDecode } from 'jwt-decode';
 
 function Home() {
     const [auth, setAuth] = useState(false);
@@ -21,8 +20,15 @@ function Home() {
     }
   
     const {setGlobalVar} = context;
-    const {setUserInfo} = context;
     useEffect(() => {
+        console.log(
+            {
+                LogIn,
+                CookieLoggin,
+                LogOut,
+                context
+            }
+    )
         if(LogIn.status === 'failed'){
             dispatch(resetLogIn());
             dispatch(reseCookieLogginUser());
@@ -32,16 +38,7 @@ function Home() {
         }
         if(CookieLoggin.status === 'succeeded'){
             setAuth(true);
-            const token = document.cookie
-            .split('; ')
-            .find((row) => row.startsWith('User='))
-            ?.split('=')[1];
-            if (token) {
-                const decoded = jwtDecode(token);
-                setGlobalVar(true);
-                setUserInfo(decoded);
-            }
-
+            setGlobalVar(true);
         }
         if(CookieLoggin.status === 'failed'){
             dispatch(resetLogIn());

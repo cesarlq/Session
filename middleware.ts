@@ -1,37 +1,44 @@
 import { NextResponse } from 'next/server';
-import type { NextRequest } from 'next/server';
-import { jwtVerify } from 'jose';
+import { NextRequest } from 'next/server';
 
 export async function middleware(req: NextRequest) {
-    const token = req.cookies.get('User');
-    const url = req.nextUrl.clone();
-    console.log('En producción:', {
-      cookies: req.cookies,
-      token: token ? token.value : 'No Token Found',
+  
+  const userApiUrl = `${process.env.NEXT_PUBLIC_PATH_PROD}/session/user`;
+  const url = req.nextUrl.clone();
+  try {
+    const res = await fetch(userApiUrl, {
+      method: 'GET',
+      headers: {
+        Cookie: req.headers.get('cookie') || '',  // Pasar las cookies en la solicitud
+        credentials: 'include',
+      },
     });
-  if (token) {
-    console.log('Si tiene Token')
-    try {
-      const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-      const { payload } = await jwtVerify(token.value, secret);
-      req.headers.set('x-user-data', JSON.stringify(payload)); // Guardar la info del usuario en un header
-  } catch (error) {
-      console.error('Invalid JWT:', error);
-    }
-  }else{
-    console.log('No Encontro Token.')
-    const isPageRequest = !url.pathname.includes('.') && url.pathname !== '/' && url.pathname !== '/Register';
-    if (isPageRequest ) {
-      url.pathname = '/';
-      return NextResponse.redirect(url);
-    }
-  }
 
-  return NextResponse.next();
+    console.log('cookie', req.headers.get('cookie'))
+    if(res.status == 401){
+      const isPageRequest = !url.pathname.includes('.') && url.pathname !== '/' && url.pathname !== '/Register';
+
+      if (isPageRequest) {
+        console.log('entro')
+        url.pathname = '/';
+        return NextResponse.redirect(url);
+      }
+    }
+    const userData = await res.json();
+    console.log('User Data:', userData);
+
+
+    return NextResponse.next();
+  }catch(error){
+    
+  }
+  
+ 
+  
 }
 
 export const config = {
     matcher: [
       '/:path*',   
-    ],
+    ]
   };
